@@ -23,23 +23,23 @@ inputs:
 runs:
   using: "composite"
   steps:
-		- name: Write .env file if provided
+    - name: Write .env file if provided
       if: inputs.env-file-content != ''
       run: |
         echo "${{ inputs.env-file-content }}" > .env
       shell: bash
 
-    # Runs a packages install
+      # Runs a packages install
     - name: Running package install
       run: yarn
       shell: bash
 
-    # Builds the app if requested
+      # Builds the app if requested
     - name: Build the app if requested
       run: yarn build
       shell: bash
 
-    # Upload the site
+      # Upload the site
     - name: Sync files from build folder to s3
       env:
         AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
@@ -47,7 +47,7 @@ runs:
       run: aws s3 sync ${{ inputs.build-dir }} ${{ inputs.s3-bucket }} --delete
       shell: bash
 
-    # Invalidate cloudfront cache
+      # Invalidate cloudfront cache
     - name: Invalidate CloudFront Cache
       env:
         AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
