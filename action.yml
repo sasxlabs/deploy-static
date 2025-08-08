@@ -43,7 +43,7 @@ runs:
     - name: Sync files from build folder to s3
       env:
         AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
-        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-access-secret-key }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
       run: aws s3 sync ${{ inputs.build-dir }} ${{ inputs.s3-bucket }} --delete
       shell: bash
 
@@ -51,6 +51,6 @@ runs:
     - name: Invalidate CloudFront Cache
       env:
         AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
-        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-access-secret-key }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
       run: aws cloudfront create-invalidation --distribution-id ${{ inputs.distribution-id }} --paths "/*"
       shell: bash
